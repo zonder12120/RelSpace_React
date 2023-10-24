@@ -1,0 +1,100 @@
+.calendar {
+    text-align: center;
+}
+
+.calendarHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    position: relative;
+}
+
+.currentMonth{
+    font-size: 1.2rem;
+}
+
+.changeMonth {
+    border: 0;
+    background: none;
+    font-size: 1.3rem;
+    font-weight: lighter;
+}
+
+.rightArrow{
+    position: absolute;
+    margin-left: 11.25rem;
+}
+
+.leftArrow{
+    position: absolute;
+    margin-right: 11.25rem;
+}
+
+
+.calendarTable {
+    margin: 0 auto;
+    border: 1px solid #dadada;
+    border-radius: 16px;
+    border-spacing: 0;
+}
+
+.otherMonth {
+    color: #afafaf;
+}
+
+th, td {
+    flex-grow: 1;
+    border: 1px solid #dadada;
+    width: 20dvmin;
+    height: 10dvmin;
+    text-align: center;
+    background-color: white;
+}
+
+th {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+td {
+    font-size: 1.2rem;
+}
+
+/* Скругление углов для первой ячейки заголовка */
+th:first-child {
+    border-top-left-radius: 15px;
+}
+
+/* Скругление углов для последней ячейки заголовка */
+th:last-child {
+    border-top-right-radius: 15px;
+}
+
+/* Скругление углов для первой ячейки данных в последней строке */
+tr:last-child td:first-child {
+    border-bottom-left-radius: 15px;
+}
+
+/* Скругление углов для последней ячейки данных в последней строке */
+tr:last-child td:last-child {
+    border-bottom-right-radius: 15px;
+}
+
+.calendarWeek{
+
+}
+
+.selectedRow > td {
+    background-color: #FF6C6C;
+    color: white;
+}
+
+.hoveredRow > td {
+    background-color: #eeeeee;
+}
+
+.hoveredButton {
+    border: 1px solid #afafaf;
+    border-radius: 10px;
+}
