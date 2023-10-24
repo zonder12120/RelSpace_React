@@ -1,5 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import classNames from 'classnames';
+import {useState, useCallback} from 'react';
 import {
     startOfMonth,
     endOfMonth,
@@ -8,20 +7,16 @@ import {
     addDays,
     getDay,
     isWeekend,
-    format,
     getDate,
-    getMonth
+    getMonth,
 } from 'date-fns';
-import styles from './Calendar.module.css'
 
-const WEEKDAY: string[] = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт'];
-
-export const Calendar = () => {
-    const [hasLoaded, setHasLoaded] = useState(false);
+function CalendarState() {
     const [selectedMonth, setSelectedMonth] = useState(new Date());
     const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
     const [hoveredRowIndex, setHoveredRowIndex] = useState<number | null>(null);
     const [calendarWeeks, setCalendarWeeks] = useState<Date[][]>([]);
+
     const findCurrentWeek = () => {
         const currentDate = new Date(); // Текущая дата
         const currentDay = currentDate.getDate(); // День текущей даты
@@ -143,50 +138,20 @@ export const Calendar = () => {
         return `${month.charAt(0).toUpperCase() + month.slice(1)} ${year}`;
     }
 
-    useEffect(() => {
-        updateCalendar();
-    }, [selectedMonth, updateCalendar]);
-
-    useEffect(() => {
-        if (!hasLoaded) {
-            setHasLoaded(true);
-        }
-        findCurrentWeek();
-    }, [hasLoaded]);
-
-    return (
-        <div className={styles.calendar}>
-            <div className={styles.calendarHeader}>
-                <button
-                    className={classNames(styles.leftArrow, styles.changeMonth)}
-                    onClick={subMonth}>{'<'}</button>
-                <div className={styles.currentMonth}>{formatMonthName(selectedMonth)}</div>
-                <button
-                    className={classNames(styles.rightArrow, styles.changeMonth)}
-                    onClick={addMonth}>{'>'}</button>
-            </div>
-            <table className={styles.calendarTable}>
-                <thead>
-                <tr>
-                    {WEEKDAY.map((item, index) => (
-                        <th key={index}>{item}</th>
-                    ))}
-                </tr>
-                </thead>
-                <tbody>
-                {calendarWeeks.map((row, index) => (
-                    <tr key={index}
-                        className={classNames(styles.calendarWeek, index === selectedRowIndex ? styles.selectedRow : '',
-                            index === hoveredRowIndex && index !== selectedRowIndex ? styles.hoveredRow : '',)}
-                        onMouseEnter={() => handleRowHover(index)}
-                        onMouseLeave={() => handleRowHover(null)}
-                        onClick={() => handleRowClick(index)}>
-                        {row.map((cell, cellIndex) => (
-                            <td key={cellIndex} className={isOtherMonth(cell) ? styles.otherMonth : ''}>{(format(cell, 'dd'))}</td>
-                        ))}</tr>
-                ))}
-                </tbody>
-            </table>
-        </div>
-    )
+    return {
+        selectedMonth,
+        selectedRowIndex,
+        hoveredRowIndex,
+        calendarWeeks,
+        subMonth,
+        addMonth,
+        formatMonthName,
+        handleRowHover,
+        handleRowClick,
+        isOtherMonth,
+        updateCalendar,
+        findCurrentWeek,
+    };
 }
+
+export default CalendarState;
